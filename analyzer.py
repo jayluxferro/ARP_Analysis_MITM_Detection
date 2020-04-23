@@ -16,7 +16,9 @@ def usage():
     sys.exit(1)
 
 def packetHandler(pkt):
-    pformat(pkt)
+    if pkt.haslayer(ARP):
+        lg.default(pformat(pkt))
+        print('')
 
 # entry
 if __name__ == '__main__':
