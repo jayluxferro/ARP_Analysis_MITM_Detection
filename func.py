@@ -7,7 +7,7 @@ Default Functions
 from scipy.signal import max_len_seq as mls
 from scapy.all import *
 
-network_config = {'host': '127.0.0.1', 'port': 5000, 'ip': '172.24.1.1', 'mac': ''}
+network_config = {'host': '127.0.0.1', 'port': 5000, 'ip': '172.24.1.1', 'mac': 'c4:e9:84:df:3c:98', 'default_mac': '00:00:00:00:00:00', 'broadcast': 'ff:ff:ff:ff:ff:ff'}
 paddingLength = 18
 padding = '\x00'
 defaultPadding = padding * paddingLength
@@ -16,8 +16,9 @@ seqNumbers = [ i + 1 for i in range(iterations) ]
 binaryByteLen = 1
 seqByteLen = 3
 getHex = {'00': '\x00', '01': '\x01', '10': '\x10', '11': '\x11'}
+numberOfBits = 6
 
-def genMLS(nbits=6, length=50):
+def genMLS(nbits=numberOfBits, length=iterations):
     return  mls(nbits=numberOfBits, length=length)[0] # returns a numpy array
 
 def arpPacket(srcIP, srcMac, dstIP, dstMac, opCode, payload):
@@ -81,5 +82,5 @@ def paddingPayload(seq, binary): # inputs are expected to be integers
 
     return extraPadding + seq + binary
 
-def sendPacket(pkt):
-    sendp(pkt) # layer 2
+def sendPacket(interface, pkt):
+    sendp(pkt, iface=interface) # layer 2

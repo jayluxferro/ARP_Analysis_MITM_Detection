@@ -28,6 +28,9 @@ if __name__ == '__main__':
     # connect to rpc
     sio.connect('http://{}:{}'.format(fx.network_config['host'], fx.network_config['port']))
 
+    # send burst ARP request packets
+    sio.emit('burst', None)
+
     # sniff for packets
     while True:
         sniff(iface=sys.argv[1], count=1, prn=packetHandler)
