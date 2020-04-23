@@ -42,7 +42,7 @@ def packetHandler(pkt):
             hwdst      : MultipleTypeField                   = (None)
             pdst       : MultipleTypeField                   = (None)
         """
-        pkt = fx.arpPacket(arp.pdst, mac, psrc, hwsrc, 2, paddingPayload.load)
+        pkt = fx.arpPacket(arp.pdst, mac, arp.psrc, arp.hwsrc, 2, paddingPayload.load)
         fx.sendPacket(iface, pkt)
         lg.success(pformat(pkt))
         print('')
