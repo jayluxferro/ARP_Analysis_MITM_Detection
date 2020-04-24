@@ -45,9 +45,5 @@ if __name__ == '__main__':
     sio.emit('burst', None)
 
     # sniff for packets
-    t = AsyncSniffer(iface=sys.argv[1], count=1, prn=packetHandler)
-    t.start()
-    """
     while True:
         sniff(iface=sys.argv[1], count=1, prn=packetHandler)
-    """
