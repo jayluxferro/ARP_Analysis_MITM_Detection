@@ -12,10 +12,10 @@ def init():
     return conn
 
 
-def logData(table, ip, mac, seq, tm, scn, binValue):
+def logData(table, ip, mac, seq, tm, scn, binValue, category):
     db = init()
     cursor = db.cursor()
 
-    cursor.execute('insert into ' + table + '(ip, mac, seq, time, scenario, bin) values(?, ?, ?, ?, ?, ?)', (ip, mac, seq, tm, scn, binValue))
+    cursor.execute('insert into ' + table + '(ip, mac, seq, time, scenario, bin, category) values(?, ?, ?, ?, ?, ?)', (ip, mac, seq, tm, scn, binValue, category))
     db.commit()
     lg.success('Added data to {}: {} <==> {}'.format(table, scn, binValue))

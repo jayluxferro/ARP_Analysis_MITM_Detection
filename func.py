@@ -71,9 +71,9 @@ def b2h(binValue, length): # inputs : binary, and integer
     # now change to  eg. '\x00\x01'
     return ''.join(newBinValue)
 
-def paddingPayload(scenario, seq, binary): # inputs are expected to be integers
+def paddingPayload(scenario, seq, binary, category): # inputs are expected to be integers
     # first part of the payload
-    extraPadding = padding * (paddingLength - binaryByteLen - (2 * seqByteLen))
+    extraPadding = padding * (paddingLength - binaryByteLen - (3 * seqByteLen))
 
     # scenario
     scenario = b2h(bin(scenario), seqByteLen)
@@ -84,7 +84,10 @@ def paddingPayload(scenario, seq, binary): # inputs are expected to be integers
     # binary
     binary = b2h(bin(binary), binaryByteLen)
 
-    return extraPadding + scenario + seq + binary
+    # category
+    category = b2h(bin(category), seqByteLen)
+
+    return extraPadding + category + scenario + seq + binary
 
 def decodePadding(payload):
     payload = [ invHex[i] for i in list(tuple(payload)) ]
@@ -97,7 +100,11 @@ def decodePadding(payload):
 
     # scenario
     scenario = int(''.join(payload[-7:-4]), 2)
-    return (scenario, seq, binValue)
+
+    # category
+    category = int(''.join(payload[-10:-7]), 2)
+
+    return (category, scenario, seq, binValue)
 
 def sendPacket(interface, pkt):
     sendp(pkt, iface=interface) # layer 2

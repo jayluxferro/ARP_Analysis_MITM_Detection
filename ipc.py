@@ -41,7 +41,7 @@ def sendBurst():
             fx.sendPacket(iface, pkt)
             lg.warning('[-] Sending ARP probe request packet')
             # log data
-            db.logData('outgoing', dstIP, fx.network_config['broadcast'], seq, time.time(), int(_), int(binValue))
+            db.logData('outgoing', dstIP, fx.network_config['broadcast'], seq, time.time(), int(_), int(binValue scenario))
             seq += 1
 
 # events

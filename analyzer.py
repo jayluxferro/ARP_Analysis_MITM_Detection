@@ -26,9 +26,10 @@ def packetHandler(pkt):
         tm = time.time()
         padding = pkt.getlayer(Padding)
         decodedPadding = fx.decodePadding(padding.load)
-        seq = decodedPadding[1]
-        scn = decodedPadding[0]
-        binValue = decodedPadding[2]
+        seq = decodedPadding[2]
+        scn = decodedPadding[1]
+        binValue = decodedPadding[3]
+        category = decodedPadding[0]
         # log data
         db.logData('incoming', ip, mac, seq, tm, scn, binValue)
         print('')
