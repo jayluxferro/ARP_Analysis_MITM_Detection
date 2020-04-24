@@ -11,11 +11,12 @@ network_config = {'host': '127.0.0.1', 'port': 5000, 'ip': '172.24.1.1', 'mac': 
 paddingLength = 18
 padding = '\x00'
 defaultPadding = padding * paddingLength
-iterations = 50
+iterations = 40
 seqNumbers = [ i + 1 for i in range(iterations) ]
 binaryByteLen = 1
 seqByteLen = 3
 getHex = {'00': '\x00', '01': '\x01', '10': '\x10', '11': '\x11'}
+invHex = {'\x00': '00', '\x01': '01', '\x10': '10', '\x11': '11'}
 numberOfBits = 6
 
 def genMLS(nbits=numberOfBits, length=iterations):
@@ -70,9 +71,12 @@ def b2h(binValue, length): # inputs : binary, and integer
     # now change to  eg. '\x00\x01'
     return ''.join(newBinValue)
 
-def paddingPayload(seq, binary): # inputs are expected to be integers
+def paddingPayload(scenario, seq, binary): # inputs are expected to be integers
     # first part of the payload
-    extraPadding = padding * (paddingLength - binaryByteLen - seqByteLen)
+    extraPadding = padding * (paddingLength - binaryByteLen - (2 * seqByteLen))
+
+    # scenario
+    scenario = b2h(bin(scenario), seqByteLen)
 
     # sequence 
     seq = b2h(bin(seq), seqByteLen)
@@ -80,7 +84,20 @@ def paddingPayload(seq, binary): # inputs are expected to be integers
     # binary
     binary = b2h(bin(binary), binaryByteLen)
 
-    return extraPadding + seq + binary
+    return extraPadding + scenario + seq + binary
+
+def decodePadding(payload):
+    payload = list(tuple(payload))
+
+    # binValue
+    binValue = int(payload[-1])
+
+    # seq
+    seq = int(''.join(payload[-4:-1]), 2)
+
+    # scenario
+    scenario = int(''.join(payload[-7:-4]), 2)
+    return (scenario, seq, binValue)
 
 def sendPacket(interface, pkt):
     sendp(pkt, iface=interface) # layer 2

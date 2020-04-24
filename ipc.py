@@ -9,6 +9,7 @@ import logger as lg
 import func as fx
 import db
 from time import sleep
+import time
 
 # usage
 def usage():
@@ -33,12 +34,14 @@ def sendBurst():
         seq = 1
         print('')
         lg.default('[-] Starting {}'.format(_))
-        sleep(5)
+        sleep(10)
         for binValue in fx.genMLS():
             # send arp probe request
-            pkt = fx.arpPacket(fx.network_config['ip'], fx.network_config['mac'], dstIP, fx.network_config['broadcast'], 1, fx.paddingPayload(seq, binValue))
+            pkt = fx.arpPacket(fx.network_config['ip'], fx.network_config['mac'], dstIP, fx.network_config['broadcast'], 1, fx.paddingPayload(_, seq, binValue))
             fx.sendPacket(iface, pkt)
             lg.warning('[-] Sending ARP probe request packet')
+            # log data
+            db.logData('outgoing', dstIP, fx.network_config['broadcast'], seq, time.time(), _, binValue)
             seq += 1
 
 # events

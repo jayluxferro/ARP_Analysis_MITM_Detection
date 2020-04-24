@@ -19,7 +19,7 @@ def packetHandler(pkt):
     global mac
     global iface
 
-    if pkt.haslayer(ARP) and pkt.haslayer(Padding):
+    if pkt.haslayer(ARP) and pkt.haslayer(Padding) and pkt.getlayer(Padding).load != fx.defaultPadding:
         # replying to request
         paddingPayload = pkt.getlayer(Padding)
         ether = pkt.getlayer(Ether)
