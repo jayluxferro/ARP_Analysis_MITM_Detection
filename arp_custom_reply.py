@@ -20,6 +20,8 @@ def packetHandler(pkt):
     global iface
 
     if pkt.haslayer(ARP) and pkt.haslayer(Padding) and pkt.getlayer(Padding).load != fx.defaultPadding:
+        lg.warning(pformat(pkt))
+        print('')
         # replying to request
         paddingPayload = pkt.getlayer(Padding)
         ether = pkt.getlayer(Ether)
@@ -42,9 +44,9 @@ def packetHandler(pkt):
             hwdst      : MultipleTypeField                   = (None)
             pdst       : MultipleTypeField                   = (None)
         """
-        pkt = fx.arpPacket(arp.pdst, mac, arp.psrc, arp.hwsrc, 2, paddingPayload.load)
-        fx.sendPacket(iface, pkt)
-        lg.success(pformat(pkt))
+        newPkt = fx.arpPacket(arp.pdst, mac, arp.psrc, arp.hwsrc, 2, paddingPayload.load)
+        fx.sendPacket(iface, newPkt)
+        lg.success(pformat(newPkt))
         print('')
 
 if __name__ == '__main__':
