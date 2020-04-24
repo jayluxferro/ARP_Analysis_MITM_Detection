@@ -31,7 +31,7 @@ def packetHandler(pkt):
         binValue = decodedPadding[3]
         category = decodedPadding[0]
         # log data
-        db.logData('incoming', ip, mac, seq, tm, scn, binValue)
+        db.logData('incoming', ip, mac, seq, tm, scn, binValue, category)
         print('')
 
 # entry
