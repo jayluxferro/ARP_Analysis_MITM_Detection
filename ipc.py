@@ -34,7 +34,7 @@ def sendBurst():
         seq = 1
         print('')
         lg.default('[-] Starting {}'.format(_))
-        sleep(10)
+        sleep(1)
         for binValue in fx.genMLS():
             # send arp probe request
             pkt = fx.arpPacket(fx.network_config['ip'], fx.network_config['mac'], dstIP, fx.network_config['broadcast'], 1, fx.paddingPayload(int(_), seq, int(binValue), scenario))

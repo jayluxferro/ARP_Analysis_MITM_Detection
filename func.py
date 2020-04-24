@@ -11,13 +11,13 @@ network_config = {'host': '127.0.0.1', 'port': 5000, 'ip': '172.24.1.1', 'mac': 
 paddingLength = 18
 padding = '\x00'
 defaultPadding = padding * paddingLength
-iterations = 256
+iterations = 60
 seqNumbers = [ i + 1 for i in range(iterations) ]
 binaryByteLen = 1
-seqByteLen = 4
+seqByteLen = 3
 getHex = {'00': '\x00', '01': '\x01', '10': '\x10', '11': '\x11'}
 invHex = {'\x00': '00', '\x01': '01', '\x10': '10', '\x11': '11'}
-numberOfBits = 16
+numberOfBits = 6
 
 def genMLS(nbits=numberOfBits, length=iterations):
     return  mls(nbits=numberOfBits, length=length)[0] # returns a numpy array
@@ -96,13 +96,13 @@ def decodePadding(payload):
     binValue = int(payload[-1])
 
     # seq
-    seq = int(''.join(payload[-5:-1]), 2)
+    seq = int(''.join(payload[-4:-1]), 2)
 
     # scenario
-    scenario = int(''.join(payload[-8:-5]), 2)
+    scenario = int(''.join(payload[-7:-4]), 2)
 
     # category
-    category = int(''.join(payload[-11:-8]), 2)
+    category = int(''.join(payload[-10:-7]), 2)
 
     return (category, scenario, seq, binValue)
 
