@@ -15,6 +15,7 @@ def init():
 def logData(table, ip, mac, seq, tm, scn, binValue):
     db = init()
     cursor = db.cursor()
+
     cursor.execute('insert into ' + table + '(ip, mac, seq, time, scenario, bin) values(?, ?, ?, ?, ?, ?)', (ip, mac, seq, tm, scn, binValue))
     db.commit()
     lg.success('Added data to {}: {} <==> {}'.format(table, scn, binValue))

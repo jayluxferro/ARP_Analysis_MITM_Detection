@@ -37,11 +37,11 @@ def sendBurst():
         sleep(10)
         for binValue in fx.genMLS():
             # send arp probe request
-            pkt = fx.arpPacket(fx.network_config['ip'], fx.network_config['mac'], dstIP, fx.network_config['broadcast'], 1, fx.paddingPayload(_, seq, binValue))
+            pkt = fx.arpPacket(fx.network_config['ip'], fx.network_config['mac'], dstIP, fx.network_config['broadcast'], 1, fx.paddingPayload(int(_), seq, binValue))
             fx.sendPacket(iface, pkt)
             lg.warning('[-] Sending ARP probe request packet')
             # log data
-            db.logData('outgoing', dstIP, fx.network_config['broadcast'], seq, time.time(), _, binValue)
+            db.logData('outgoing', dstIP, fx.network_config['broadcast'], seq, time.time(), int(_), binValue)
             seq += 1
 
 # events
