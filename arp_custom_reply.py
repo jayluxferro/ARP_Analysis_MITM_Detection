@@ -61,9 +61,5 @@ if __name__ == '__main__':
 
     # sniff for packets
     lg.default('[-] Listening for packets')
-    t = AsyncSniffer(iface=sys.argv[1], count=1, prn=packetHandler)
-    t.start()
-    """
     while True:
         sniff(iface=sys.argv[1], count=1, prn=packetHandler)
-    """
