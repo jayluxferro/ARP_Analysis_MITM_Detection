@@ -87,7 +87,7 @@ def paddingPayload(scenario, seq, binary): # inputs are expected to be integers
     return extraPadding + scenario + seq + binary
 
 def decodePadding(payload):
-    payload = list(tuple(payload))
+    payload = [ invHex[i] for i in list(tuple(payload)) ]
 
     # binValue
     binValue = int(payload[-1])

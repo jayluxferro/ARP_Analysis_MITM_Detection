@@ -9,7 +9,7 @@ import func as fx
 def init():
     conn = sqlite3.connect('test.db')
     conn.row_factory = sqlite3.Row
-    return con
+    return conn
 
 
 def logData(table, ip, mac, seq, tm, scn, binValue):
