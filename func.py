@@ -18,6 +18,7 @@ seqByteLen = 4
 getHex = {'00': '\x00', '01': '\x01', '10': '\x10', '11': '\x11'}
 invHex = {'\x00': '00', '\x01': '01', '\x10': '10', '\x11': '11'}
 numberOfBits = 16
+dataset = 'data.csv'
 
 def genMLS(nbits=numberOfBits, length=iterations):
     return  mls(nbits=numberOfBits, length=length)[0] # returns a numpy array
