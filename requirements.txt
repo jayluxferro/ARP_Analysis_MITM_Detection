@@ -4,3 +4,5 @@ eventlet
 psutil
 sklearn
 pandas
+keras
+tensorflow
