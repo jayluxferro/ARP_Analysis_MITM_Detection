@@ -15,13 +15,13 @@ import time
 def usage():
     print('Usage: python {} <interface> <node IP> <scenario>'.format(sys.argv[0]))
     sys.exit(1)
-
+"""
 ## socket defaults
 sio = socketio.Server()
 app = socketio.WSGIApp(sio, static_files={
     '/': {'content_type': 'text/html', 'filename': '../index.html'}
 })
-
+"""
 
 
 # send burst of ARP request packets
@@ -43,7 +43,7 @@ def sendBurst():
             # log data
             db.logData('outgoing', dstIP, fx.network_config['broadcast'], seq, time.time(), int(_), int(binValue), scenario)
             seq += 1
-
+"""
 # events
 @sio.on('burst')
 def burst(data):
@@ -56,7 +56,7 @@ def connect(sid, environ):
 @sio.on('disconnect')
 def disconnect(sid):
     lg.error('Client socket closed => {}'.format(sid))
-
+"""
 # daemon
 if __name__ == '__main__':
     if len(sys.argv) != 4:
@@ -68,4 +68,6 @@ if __name__ == '__main__':
     scenario = int(sys.argv[3])
     iface = sys.argv[1]
 
-    eventlet.wsgi.server(eventlet.listen((fx.network_config['host'], fx.network_config['port'])), app)
+    # burst 
+    sendBurst()
+    #eventlet.wsgi.server(eventlet.listen((fx.network_config['host'], fx.network_config['port'])), app)

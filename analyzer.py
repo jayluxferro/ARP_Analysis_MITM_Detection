@@ -11,7 +11,7 @@ import func as fx
 import db
 import time
 
-sio = socketio.Client()
+#sio = socketio.Client()
 
 def usage():
     print('Usage: python {} <interface>'.format(sys.argv[0]))
@@ -38,13 +38,13 @@ def packetHandler(pkt):
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         usage()
-
+    """
     # connect to rpc
     sio.connect('http://{}:{}'.format(fx.network_config['host'], fx.network_config['port']))
 
     # send burst ARP request packets
     sio.emit('burst', None)
-
+    """
     # sniff for packets
     while True:
         sniff(iface=sys.argv[1], count=1, prn=packetHandler)
