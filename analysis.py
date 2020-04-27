@@ -118,20 +118,6 @@ def generateResults(random_state=20):
     plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
     plt.title('Gassian NB - {:.2f}%'.format(model.score(X_test, y_test)))
     plt.show()
-    
-    model = BernoulliNB().fit(X_train, y_train)
-    print(model)
-    lg.success('BernoulliNB: {:.2f}'.format(model.score(X_test, y_test)))
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
-    plt.title('Bernoulli NB - {:.2f}%'.format(model.score(X_test, y_test)))
-    plt.show()
-    
-    model = MultinomialNB().fit(X_train, y_train)
-    print(model)
-    lg.success('MultinomialNB: {:.2f}'.format(model.score(X_test, y_test)))
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
-    plt.title('Multinomial NB - {:.2f}%'.format(model.score(X_test, y_test)))
-    plt.show()
 
 # generate linear model results
 generateResults(random_state=20)
