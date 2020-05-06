@@ -6,3 +6,4 @@ sklearn
 pandas
 keras
 tensorflow
+seaborn

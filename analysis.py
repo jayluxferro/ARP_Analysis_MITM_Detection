@@ -16,10 +16,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import LinearSVC, SVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import plot_confusion_matrix, plot_roc_curve, plot_precision_recall_curve
+from sklearn.metrics import confusion_matrix
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.naive_bayes import *
-
 import logger as lg
 
 # displaying a sample MLS sequence and the RTT
@@ -61,63 +60,37 @@ class_names = ['Normal', 'MITM']
 def generateResults(random_state=20):
     X_train, X_test, y_train, y_test = train_test_split(inputs, targets, test_size=0.2, random_state=random_state)
     print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)
-    
     model = LinearSVC(random_state=0).fit(X_train, y_train)
-    print(model)
     lg.success('LinearSVC: {:.2f}\n'.format(model.score(X_test, y_test)))
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
-    #plt.title('Linear SVC - {:.2f}%'.format(model.score(X_test, y_test)))
-    plt.show()
-
+    fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='LinearSVC.eps')
 
     model = SVC(random_state=0).fit(X_train, y_train)
-    print(model)
     lg.success('SVC: {:.2f}\n'.format(model.score(X_test, y_test)))
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
-    #plt.title('SVC - {:.2f}%'.format(model.score(X_test, y_test)))
-    plt.show()
+    fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='SVC.eps')
 
     model = KNeighborsClassifier(n_neighbors=1).fit(X_train, y_train)
-    print(model)
     lg.success('KNN: {:.2f}\n'.format(model.score(X_test, y_test)))
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
-    #plt.title('KNN - {:.2f}%'.format(model.score(X_test, y_test)))
-    plt.show()
+    fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='KNN.eps')
 
     model = DecisionTreeClassifier(random_state=0).fit(X_train, y_train)
-    print(model)
     lg.success('DecisionTree: {:.2f}\n'.format(model.score(X_test, y_test)))
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
-    #plt.title('Decision Tree - {:.2f}%'.format(model.score(X_test, y_test)))
-    plt.show()
+    fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='DecisionTree.eps')
 
     model = LogisticRegression(random_state=0).fit(X_train, y_train)
-    print(model)
     lg.success('LogisticRegression: {:.2f}\n'.format(model.score(X_test, y_test)))
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
-    #plt.title('Logistic Regression - {:.2f}%'.format(model.score(X_test, y_test)))
-    plt.show()
-    
+    fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='LogisticRegression.eps')
+
     model = RandomForestClassifier(random_state=0).fit(X_train, y_train)
-    print(model)
     lg.success('RandomForest: {:.2f}\n'.format(model.score(X_test, y_test)))
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
-    #plt.title('Random Forest - {:.2f}%'.format(model.score(X_test, y_test)))
-    plt.show()
+    fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='RandomForest.eps')
 
     model = GradientBoostingClassifier(random_state=0).fit(X_train, y_train)
-    print(model)
     lg.success('GradientBoosting: {:.2f}\n'.format(model.score(X_test, y_test)))
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
-    #plt.title('Gradient Boosting - {:.2f}%'.format(model.score(X_test, y_test)))
-    plt.show()
-    
+    fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='GradientBoosting.eps')
+
     model = GaussianNB().fit(X_train, y_train)
-    print(model)
     lg.success('GaussianNB: {:.2f}'.format(model.score(X_test, y_test)))
-    plot_confusion_matrix(model, X_test, y_test, normalize='true', display_labels=class_names, cmap=plt.cm.Blues)
-    #plt.title('Gaussian NB - {:.2f}%'.format(model.score(X_test, y_test)))
-    plt.show()
+    fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='GaussianNB.eps')
 
 # generate linear model results
 generateResults(random_state=20)
