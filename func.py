@@ -9,6 +9,7 @@ from scapy.all import *
 import cmpp
 import numpy as np
 from pandas import DataFrame as DF
+from sklearn.metrics import classification_report
 
 network_config = {'host': '127.0.0.1', 'port': 5000, 'ip': '172.24.1.1', 'mac': 'c4:e9:84:df:3c:98', 'default_mac': '00:00:00:00:00:00', 'broadcast': 'ff:ff:ff:ff:ff:ff'}
 paddingLength = 18
@@ -22,6 +23,10 @@ getHex = {'00': '\x00', '01': '\x01', '10': '\x10', '11': '\x11'}
 invHex = {'\x00': '00', '\x01': '01', '\x10': '10', '\x11': '11'}
 numberOfBits = 16
 dataset = 'data.csv'
+
+def metricReport(y_true, y_pred, file_name):
+    clsf_report = DF(classification_report(y_true=y_true, y_pred=y_pred, output_dict=True)).transpose()
+    clsf_report.to_latex(file_name, index= True)
 
 def plot_cm(cm, title='Confusion Matrix', display_labels=None, output_file=None):
     cmap = 'PuRd'

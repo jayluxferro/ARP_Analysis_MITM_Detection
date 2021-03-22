@@ -63,34 +63,42 @@ def generateResults(random_state=20):
     model = LinearSVC(random_state=0).fit(X_train, y_train)
     lg.success('LinearSVC: {:.2f}\n'.format(model.score(X_test, y_test)))
     fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='LinearSVC.eps')
+    fx.metricReport(y_test, model.predict(X_test), 'LinearSVC.tex')
 
     model = SVC(random_state=0).fit(X_train, y_train)
     lg.success('SVC: {:.2f}\n'.format(model.score(X_test, y_test)))
     fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='SVC.eps')
+    fx.metricReport(y_test, model.predict(X_test), 'SVC.tex')
 
     model = KNeighborsClassifier(n_neighbors=1).fit(X_train, y_train)
     lg.success('KNN: {:.2f}\n'.format(model.score(X_test, y_test)))
     fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='KNN.eps')
+    fx.metricReport(y_test, model.predict(X_test), 'KNN.tex')
 
     model = DecisionTreeClassifier(random_state=0).fit(X_train, y_train)
     lg.success('DecisionTree: {:.2f}\n'.format(model.score(X_test, y_test)))
     fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='DecisionTree.eps')
+    fx.metricReport(y_test, model.predict(X_test), 'DecisionTree.tex')
 
     model = LogisticRegression(random_state=0).fit(X_train, y_train)
     lg.success('LogisticRegression: {:.2f}\n'.format(model.score(X_test, y_test)))
     fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='LogisticRegression.eps')
+    fx.metricReport(y_test, model.predict(X_test), 'LogisticRegression.tex')
 
     model = RandomForestClassifier(random_state=0).fit(X_train, y_train)
     lg.success('RandomForest: {:.2f}\n'.format(model.score(X_test, y_test)))
     fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='RandomForest.eps')
+    fx.metricReport(y_test, model.predict(X_test), 'RandomForest.tex')
 
     model = GradientBoostingClassifier(random_state=0).fit(X_train, y_train)
     lg.success('GradientBoosting: {:.2f}\n'.format(model.score(X_test, y_test)))
     fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='GradientBoosting.eps')
+    fx.metricReport(y_test, model.predict(X_test), 'GradientBoosting.tex')
 
     model = GaussianNB().fit(X_train, y_train)
     lg.success('GaussianNB: {:.2f}'.format(model.score(X_test, y_test)))
     fx.plot_cm(confusion_matrix(y_test, model.predict(X_test)), title='', display_labels=class_names, output_file='GaussianNB.eps')
+    fx.metricReport(y_test, model.predict(X_test), 'GaussianNB.tex')
 
 # generate linear model results
 generateResults(random_state=20)
