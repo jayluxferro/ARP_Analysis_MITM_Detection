@@ -23,15 +23,16 @@ getHex = {'00': '\x00', '01': '\x01', '10': '\x10', '11': '\x11'}
 invHex = {'\x00': '00', '\x01': '01', '\x10': '10', '\x11': '11'}
 numberOfBits = 16
 dataset = 'data.csv'
+results_path = './results/'
 
 def metricReport(y_true, y_pred, file_name):
     clsf_report = DF(classification_report(y_true=y_true, y_pred=y_pred, output_dict=True)).transpose()
-    clsf_report.to_latex(file_name, index= True)
+    clsf_report.to_latex(results_path + 'tex/' + file_name, index= True)
 
 def plot_cm(cm, title='Confusion Matrix', display_labels=None, output_file=None):
     cmap = 'PuRd'
     cm = np.array(cm)
-    cmpp.pretty_plot_confusion_matrix(DF(cm, index=display_labels, columns=display_labels), cmap=cmap, title=title, output_file=output_file)
+    cmpp.pretty_plot_confusion_matrix(DF(cm, index=display_labels, columns=display_labels), cmap=cmap, title=title, output_file=results_path + 'graphs/' + output_file)
 
 def genMLS(nbits=numberOfBits, length=iterations):
     return  mls(nbits=numberOfBits, length=length)[0] # returns a numpy array
